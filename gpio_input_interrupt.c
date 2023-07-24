@@ -1,10 +1,4 @@
-/*
- * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2018 NXP
- * All rights reserved.
- *
- * SPDX-License-Identifier: BSD-3-Clause
- */
+
 
 #include "fsl_debug_console.h"
 #include "fsl_port.h"
@@ -26,41 +20,24 @@
 #define BOARD_SW_IRQ_HANDLER BOARD_SW1_IRQ_HANDLER
 #define BOARD_SW_NAME        BOARD_SW1_NAME
 
-/*******************************************************************************
- * Prototypes
- ******************************************************************************/
 
-/*******************************************************************************
- * Variables
- ******************************************************************************/
-/* Whether the SW button is pressed */
 volatile bool g_ButtonPress = false;
 
-/*******************************************************************************
- * Code
- ******************************************************************************/
-/*!
- * @brief Interrupt service fuction of switch.
- *
- * This function toggles the LED
- */
+
 void BOARD_SW_IRQ_HANDLER(void)
 {
 #if (defined(FSL_FEATURE_PORT_HAS_NO_INTERRUPT) && FSL_FEATURE_PORT_HAS_NO_INTERRUPT)
-    /* Clear external interrupt flag. */
+   
     GPIO_GpioClearInterruptFlags(BOARD_SW_GPIO, 1U << BOARD_SW_GPIO_PIN);
 #else
-    /* Clear external interrupt flag. */
+
     GPIO_PortClearInterruptFlags(BOARD_SW_GPIO, 1U << BOARD_SW_GPIO_PIN);
 #endif
-    /* Change state of button. */
+  
     g_ButtonPress = true;
     SDK_ISR_EXIT_BARRIER;
 }
 
-/*!
- * @brief Main function
- */
 int main(void)
 {
     /* Define the init structure for the input switch pin */
@@ -79,9 +56,6 @@ int main(void)
     BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
 
-    /* Print a note to terminal. */
-    PRINTF("\r\n GPIO Driver example\r\n");
-    PRINTF("\r\n Press %s to turn on/off a LED \r\n", BOARD_SW_NAME);
 
 /* Init input switch GPIO. */
 #if (defined(FSL_FEATURE_PORT_HAS_NO_INTERRUPT) && FSL_FEATURE_PORT_HAS_NO_INTERRUPT)
@@ -99,7 +73,6 @@ int main(void)
     {
         if (g_ButtonPress)
         {
-            PRINTF(" %s is pressed \r\n", BOARD_SW_NAME);
             /* Toggle LED. */
             GPIO_PortToggle(BOARD_LED_GPIO, 1U << BOARD_LED_GPIO_PIN);
             /* Reset state of button. */
