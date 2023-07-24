@@ -1,10 +1,4 @@
-/*
- * Copyright (c) 2013 - 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
- * All rights reserved.
- *
- * SPDX-License-Identifier: BSD-3-Clause
- */
+
 
 #include "pin_mux.h"
 #include "clock_config.h"
@@ -14,9 +8,7 @@
 #include "fsl_common.h"
 #include "fsl_debug_console.h"
 #include "fsl_port.h"
-/*******************************************************************************
- * Definitions
- ******************************************************************************/
+
 #define DEMO_UART          UART2
 #define DEMO_UART_CLKSRC   BUS_CLK
 #define DEMO_UART_CLK_FREQ CLOCK_GetFreq(BUS_CLK)
@@ -31,14 +23,8 @@
 #define BOARD_SW_IRQ_HANDLER BOARD_SW1_IRQ_HANDLER
 #define BOARD_SW_NAME        BOARD_SW1_NAME
 
-
-/*******************************************************************************
- * Prototypes
- ******************************************************************************/
 volatile bool g_ButtonPress = false;
-/*******************************************************************************
- * Variables
- ******************************************************************************/
+
 
 uint8_t txbuff[]   = "Uart polling example\r\nBoard will send back received characters\r\n";
 uint8_t rxbuff[20] = {0};
@@ -57,12 +43,7 @@ void BOARD_SW_IRQ_HANDLER(void)
     SDK_ISR_EXIT_BARRIER;
 }
 
-/*******************************************************************************
- * Code
- ******************************************************************************/
-/*!
- * @brief Main function
- */
+
 int main(void)
 {
     uint8_t ch[20];
@@ -123,7 +104,7 @@ int main(void)
        {
            if (g_ButtonPress)
            {
-              // PRINTF(" %s is pressed \r\n", BOARD_SW_NAME);
+             
                /* Toggle LED. */
                GPIO_PortToggle(BOARD_LED_GPIO, 1U << BOARD_LED_GPIO_PIN);
                UART_WriteBlocking(DEMO_UART, "led on ", 7);
